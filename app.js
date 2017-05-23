@@ -10,9 +10,18 @@ var brcyptjs     = require('bcryptjs');
 var validator    = require('express-validator');
 var session      = require('express-session');
 
+// Firebase Modules
+var firebase = require('firebase');
+var frConfig = require('./config/config');
+
+// Firebase reference
+firebase.initializeApp(frConfig);
+
 // Routes modules
-var index = require('./routes/index');
-var users = require('./routes/users');
+var index  = require('./routes/index');
+var users  = require('./routes/users');
+var albums = require('./routes/albums');
+var genres = require('./routes/genres');
 
 // Express instance
 var app = express();
@@ -68,6 +77,8 @@ app.use(function(req, res, next) {
 // Routes middleware
 app.use('/', index);
 app.use('/users', users);
+app.use('/albums', albums);
+app.use('/genres', genres);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
