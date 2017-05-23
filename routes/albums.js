@@ -10,7 +10,33 @@ var firebase = require('firebase');
 
 // Show Albums
 router.get('/', function(req, res, next) {
-  res.render('albums/index');
+
+  // Fetch Genres from db
+  var albumRef = firebase.database().ref('albums');
+
+  // Read collection
+  albumRef.once('value', function(snapshot) {
+
+    var albums = [];
+
+    snapshot.forEach(function(data) {
+
+      albums.push({
+        id     : data.key,
+        artist : data.val().artist,
+        title  : data.val().title,
+        genre  : data.val().genre,
+        info   : data.val().info,
+        label  : data.val().label,
+        tracks : data.val().tracks,
+        cover  : data.val().cover
+      });
+
+    });
+
+    res.render('albums/index', {albums: albums});
+
+  });
 });
 
 // Show Album's add form
@@ -69,6 +95,21 @@ router.post('/add', upload.single('cover'), function(req, res, next) {
   // Message + redirection
   req.flash('success_msg', 'Album Saved');
   res.redirect('/albums');
+
+});
+
+router.get("/details/:id", function(req, res) {
+
+  // Get id
+  var id = req.params.id;
+
+  // Fetch album with same id
+  var albumRef = firebase.database().ref('albums/' + id);
+  albumRef.once('value', function(snapshot){
+    var album = snapshot.val();
+    res.render('albums/details', { album: album, id: id });
+  });
+
 
 });
 
