@@ -6,7 +6,28 @@ var firebase = require('firebase');
 
 // Shows Genres
 router.get('/', function(req, res, next) {
-  res.render('genres/index');
+
+  // Fetch Genres from db
+  var genreRef = firebase.database().ref('genres');
+
+  // Read collection
+  genreRef.once('value', function(snapshot) {
+
+    var genres = [];
+
+    snapshot.forEach(function(data) {
+
+      genres.push({
+        id: data.key,
+        name: data.val().name
+      });
+
+    });
+
+    res.render('genres/index', {genres: genres});
+
+  });
+
 });
 
 // Add Genre View
