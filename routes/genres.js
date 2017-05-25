@@ -88,4 +88,19 @@ router.post('/edit/:id', function(req, res, next) {
 
 });
 
+// Delete genre
+router.delete('/delete/:id', function(req, res, next) {
+
+  // Get id
+  var id = req.params.id;
+
+  // Update specific genre
+  var genreRef = firebase.database().ref('genres/' + id);
+  genreRef.remove();
+
+  req.flash('success_msg', 'Genre Deleted')
+  res.sendStatus(200);
+
+});
+
 module.exports = router;

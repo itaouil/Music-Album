@@ -194,4 +194,19 @@ router.post('/edit/:id', upload.single('cover'), function(req, res, next) {
 
 });
 
+// Delete album
+router.delete('/delete/:id', function(req, res, next) {
+
+  // Get id
+  var id = req.params.id;
+
+  // Update specific genre
+  var albumRef = firebase.database().ref('albums/' + id);
+  albumRef.remove();
+
+  req.flash('success_msg', 'Album Deleted')
+  res.sendStatus(200);
+
+});
+
 module.exports = router;
