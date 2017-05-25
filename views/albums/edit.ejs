@@ -1,0 +1,63 @@
+<% include ../partials/header %>
+  <h1>Add Album</h1>
+
+  <form enctype="multipart/form-data" action="/albums/edit/<%= id %>" method="post">
+
+    <!-- Artist -->
+    <div class="form-group">
+      <label>Artist</label>
+      <input name="artist" type="text" class="form-control" placeholder="Artist Name" value="<%= album.artist %>">
+    </div>
+
+    <!-- Title -->
+    <div class="form-group">
+      <label>Album</label>
+      <input name="title" type="text" class="form-control" placeholder="Albums Title" value="<%= album.title %>">
+    </div>
+
+    <!-- Genre -->
+    <div class="form-group">
+      <label>Genre</label>
+      <select class="form-control" name="genre">
+        <% for (var i=0; i < genres.length; i++) {%>
+          <option value="<%= genres[i].name %>"><%= genres[i].name %></option>
+        <% } %>
+      </select>
+    </div>
+
+    <!-- Info -->
+    <div class="form-group">
+      <label>Album Info</label>
+      <input name="info" type="text" class="form-control" placeholder="Albums Info" value="<%= album.info %>">
+    </div>
+
+    <!-- Release -->
+    <div class="form-group">
+      <label>Release Year</label>
+      <input name="year" type="text" class="form-control" value="<%= album.release %>">
+    </div>
+
+    <!-- Record Label -->
+    <div class="form-group">
+      <label>Record Label</label>
+      <input name="label" type="text" class="form-control" value="<%= album.label %>">
+    </div>
+
+    <!-- Number of Tracks -->
+    <div class="form-group">
+      <label>Number of Tracks</label>
+      <input name="tracks" type="number" class="form-control" value="<%= album.tracks %>">
+    </div>
+
+    <!-- Album Cover -->
+    <div class="form-group">
+      <label>Album Cover</label>
+      <input name="cover" type="file" class="form-control">
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-default">Submit</button>
+    <a href="/albums" class="btn btn-danger">Close</a>
+
+  </form>
+<% include ../partials/footer %>

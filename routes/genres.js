@@ -54,4 +54,38 @@ router.post('/add', function(req, res, next) {
 
 });
 
+// Edit genres
+router.get('/edit/:id', function(req, res, next) {
+
+  // Get id
+  var id = req.params.id;
+
+  // Fetch genre with given id
+  var genreRef = firebase.database().ref('genres/' + id);
+  genreRef.once('value', function(snapshot){
+    var genre = snapshot.val();
+    res.render('genres/edit', { genre: genre, id: id });
+  });
+
+});
+
+// Edit genres
+router.post('/edit/:id', function(req, res, next) {
+
+  // Get id
+  var id = req.params.id;
+
+  // Name body
+  var name = req.body.name;
+
+  // Update specific genre
+  var genreRef = firebase.database().ref('genres/' + id);
+  genreRef.update({
+    name: name
+  });
+
+  res.redirect('/genres');
+
+});
+
 module.exports = router;
