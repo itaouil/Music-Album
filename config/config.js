@@ -1,1 +1,1 @@
-// Here goes your firebase stuff
+// Yout firebase stuff
